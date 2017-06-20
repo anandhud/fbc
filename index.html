@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link data-require="bootstrap@*" data-semver="4.0.5" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" />
+    <script data-require="bootstrap@*" data-semver="4.0.5" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js"></script>
+    <script data-require="angularjs@1.6.2" data-semver="1.6.2" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.2/angular.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>ViaSat</title>
+</head>
+
+<body ng-app="vsCompensation" ng-cloak>
+    <div ng-controller="computeController as compute">
+        <div class="row">
+            <div class="col-xs-12">
+                <h1>Flexi basket calculator </h1>
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-6">
+                <label for="">Total Annual Compensation aka CTC from your letter
+</label></div>
+            <div class="col-xs-6">
+                <input type="number" maxlength="10" name="totalCTC" id="totalCTC" value="" ng-model="compute.compensation.totalAnnualCompensation.annual" />
+
+            </div>
+        </div>
+        <hr />
+        <div class="row">
+
+            <div class="col-xs-6">
+                <label for="">Annual Incentive from your letter   
+              </label>
+            </div>
+            <div class="col-xs-6">
+                <input type="number" name="totalCTC" id="annualIncentive" value="" ng-model="compute.compensation.annualIncentive.annual" />
+            </div>
+
+        </div>
+        <hr />
+        <div class="row">
+            <div class="col-xs-12 table-responsive">
+
+                <table border="1" style="border-collapse:collapse;" width="100%" cellpadding="10" cellspacing="10">
+                    <thead>
+                        <tr>
+                            <th align="center">Description</th>
+                            <th align="center">Monthly</th>
+                            <th align="center">Annual</th>
+                            <th align="center">My Choices</th>
+                            <th align="center">Projected Annual</th>
+                            <th>The numbers provided below are estimates. There is no guarantee this reflects your taxes as you may have other tax components that can change this calculation, You are responsible for understanding your compensation structure, and taxes and planning accordingly
+</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="component in compute.compensation track by $index" ng-if="component.description != 'ctc' && $index<18">
+                            <td width="30%" ng-class="{'bold':$last}">
+                              <b ng-if="$index==17">{{component.description}}</b>
+                              <span ng-if="$index!=17">{{component.description}}</span>
+                            </td>
+                            <td width="10%" ng-class="{'bold':$index==17}">{{component.annual/12 | currency:"":0}}</td>
+                            <td width="10%" ng-class="{'bold':$index==17}">
+                              
+                              {{component.annual|currency:"":0}}
+                              </td>
+                            <td width="10%" ng-class="{'bold':$last}" align="center"><input ng-if="component.canOpt" type="checkbox" name="canOpt{{$index}}" ng-model="component.opted"></td>
+                            <td width="10%" ng-class="{'bold':$index==17}">{{component.projected|currency:"":0}}</td>
+                            <td widht="20%">{{component.messageInfo}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <hr />
+        <!--<div class="row">-->
+        <!--    <div class="col-xs-12 table-responsive">-->
+
+        <!--        <table border="1" style="border-collapse:collapse;" width="100%" cellpadding="10" cellspacing="10">-->
+                    
+        <!--            <tbody>-->
+        <!--                <tr ng-repeat="component in compute.compensation track by $index" ng-if="$index>17">-->
+        <!--                    <td width="42%" ng-class="{'bold':$last || $index==18}">{{component.description}}-->
+        <!--                    </td>-->
+        <!--                    <td width="11%" ng-class="{'bold':$last}"></td>-->
+        <!--                    <td width="13.2%" class="bold">-->
+        <!--                        <span ng-if="$index==19">-->
+        <!--                          {{component.annual*100}}%-->
+        <!--                        </span>-->
+        <!--                        <span ng-if="$index!=19">-->
+        <!--                          {{component.annual|currency:"":0}}-->
+        <!--                        </span>-->
+        <!--                      </td>-->
+        <!--                    <td width="14%" class="bold" align="center"></td>-->
+        <!--                    <td class="bold">-->
+        <!--                      <span ng-if="$index==19">-->
+        <!--                          {{component.projected*100}}%-->
+        <!--                        </span>-->
+        <!--                        <span ng-if="$index!=19">-->
+        <!--                          {{component.projected|currency:"":0}}-->
+        <!--                        </span>-->
+                              
+        <!--                    </td>-->
+                            
+        <!--                </tr>-->
+        <!--            </tbody>-->
+        <!--        </table>-->
+        <!--    </div>-->
+        <!--</div>-->
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>
