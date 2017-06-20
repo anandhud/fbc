@@ -50,21 +50,22 @@
                             <th align="center">Annual</th>
                             <th align="center">My Choices</th>
                             <th align="center">Projected Annual</th>
-                            <th>The numbers provided below are estimates. There is no guarantee this reflects your taxes as you may have other tax components that can change this calculation, You are responsible for understanding your compensation structure, and taxes and planning accordingly
-</th>
+                            <th>The numbers provided below are estimates. There is no guarantee this reflects your taxes as you may have other tax components that can change this calculation, You are responsible for understanding your compensation structure,
+                                and taxes and planning accordingly
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="component in compute.compensation track by $index" ng-if="component.description != 'ctc' && $index<18">
                             <td width="30%" ng-class="{'bold':$last}">
-                              <b ng-if="$index==17">{{component.description}}</b>
-                              <span ng-if="$index!=17">{{component.description}}</span>
+                                <b ng-if="$index==17">{{component.description}}</b>
+                                <span ng-if="$index!=17">{{component.description}}</span>
                             </td>
                             <td width="10%" ng-class="{'bold':$index==17}">{{component.annual/12 | currency:"":0}}</td>
                             <td width="10%" ng-class="{'bold':$index==17}">
-                              
-                              {{component.annual|currency:"":0}}
-                              </td>
+
+                                {{component.annual|currency:"":0}}
+                            </td>
                             <td width="10%" ng-class="{'bold':$last}" align="center"><input ng-if="component.canOpt" type="checkbox" name="canOpt{{$index}}" ng-model="component.opted"></td>
                             <td width="10%" ng-class="{'bold':$index==17}">{{component.projected|currency:"":0}}</td>
                             <td widht="20%">{{component.messageInfo}}</td>
@@ -74,11 +75,12 @@
             </div>
         </div>
         <hr />
+        <div style="color:#fff">{{compute.compensation.expectedMarginalTaxRate.annual}}</div>
         <!--<div class="row">-->
         <!--    <div class="col-xs-12 table-responsive">-->
 
         <!--        <table border="1" style="border-collapse:collapse;" width="100%" cellpadding="10" cellspacing="10">-->
-                    
+
         <!--            <tbody>-->
         <!--                <tr ng-repeat="component in compute.compensation track by $index" ng-if="$index>17">-->
         <!--                    <td width="42%" ng-class="{'bold':$last || $index==18}">{{component.description}}-->
@@ -100,9 +102,9 @@
         <!--                        <span ng-if="$index!=19">-->
         <!--                          {{component.projected|currency:"":0}}-->
         <!--                        </span>-->
-                              
+
         <!--                    </td>-->
-                            
+
         <!--                </tr>-->
         <!--            </tbody>-->
         <!--        </table>-->
