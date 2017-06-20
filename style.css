@@ -1,0 +1,14 @@
+/* Styles go here */
+
+body {
+    font-family: 'Trebuchet MS';
+    margin: 10px;
+}
+
+.row {
+    margin: 0 10px;
+}
+
+table tbody tr td.bold {
+    font-weight: bold;
+}
