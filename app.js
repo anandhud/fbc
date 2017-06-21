@@ -1,4 +1,4 @@
-var app = angular.module('vsCompensation', []);
+    var app = angular.module('vsCompensation', []);
 
     app.controller('computeController', function($scope) {
         var vm = this;
@@ -56,7 +56,9 @@ var app = angular.module('vsCompensation', []);
                 },
                 "canOpt": false,
                 hide: false,
-                messageInfo: ""
+                get messageInfo() {
+                    return this.projected > 0 ? "We have automatically made this choice for you to optimize your taxes" : "";
+                }
             },
             "specialAllowance": {
                 "description": "Special Allowance",
@@ -81,15 +83,15 @@ var app = angular.module('vsCompensation', []);
                         );
                 },
                 get projected() {
-                    return vm.compensation.totalAnnualCompensation.annual -
-                        (vm.compensation.gratuity.annual +
-                            vm.compensation.employerPf.annual +
-                            vm.compensation.annualIncentive.annual
-                        ) - (vm.compensation.basicSalary.annual +
-                            vm.compensation.hra.annual +
-                            vm.compensation.conveyanceAllowance.annual
-                        ) - (vm.compensation.medicalReimbursement.annual +
-                            vm.compensation.fuelAllowance.annual +
+                    return vm.compensation.totalAnnualCompensation.projected -
+                        (vm.compensation.gratuity.projected +
+                            vm.compensation.employerPf.projected +
+                            vm.compensation.annualIncentive.projected
+                        ) - (vm.compensation.basicSalary.projected +
+                            vm.compensation.hra.projected +
+                            vm.compensation.conveyanceAllowance.projected
+                        ) - (vm.compensation.medicalReimbursement.projected +
+                            vm.compensation.fuelAllowance.projected +
                             vm.compensation.lta.projected +
                             vm.compensation.mealAllowance.projected +
                             vm.compensation.telephoneReimbursement.projected +
