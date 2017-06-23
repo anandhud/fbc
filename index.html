@@ -66,7 +66,11 @@
 
                                 {{component.annual|currency:"":0}}
                             </td>
-                            <td width="10%" ng-class="{'bold':$last}" align="center"><input ng-if="component.canOpt" type="checkbox" name="canOpt{{$index}}" ng-model="component.opted"></td>
+                            <td width="10%" ng-class="{'bold':$last}" align="center">
+                                <input ng-if="component.canOpt && !component.options" type="checkbox" name="canOpt{{$index}}" ng-model="component.opted">
+                                <select name="mychoice{{$index}}" ng-model="component.opted" ng-if="component.canOpt && component.options" ng-options="option.value as option.key for option in component.options">
+                                </select>
+                            </td>
                             <td width="10%" ng-class="{'bold':$index==17}">{{component.projected|currency:"":0}}</td>
                             <td widht="20%">{{component.messageInfo}}</td>
                         </tr>
