@@ -126,7 +126,7 @@
                 "description": "Fuel Allowance",
                 "monthly": 0,
                 get annual() {
-                    return ((vm.compensation.basicSalary.annual * 7.5 / 100) <= 19200 ?
+                    return this.opted !== 'false' ? ((vm.compensation.basicSalary.annual * (this.opted ? this.opted : 0)) <= 19200 ?
                         0 : (vm.compensation.totalAnnualCompensation.annual -
                             (vm.compensation.gratuity.annual + vm.compensation.employerPf.annual +
                                 vm.compensation.annualIncentive.annual) -
@@ -137,7 +137,7 @@
                                 vm.compensation.annualIncentive.annual) -
                             (vm.compensation.basicSalary.annual + vm.compensation.hra.annual) -
                             (vm.compensation.medicalReimbursement.annual)) :
-                        ((vm.compensation.basicSalary.annual * 7.5 / 100) > 144000) ? ((vm.compensation.totalAnnualCompensation.annual -
+                        ((vm.compensation.basicSalary.annual * (this.opted ? this.opted : 0)) > 144000) ? ((vm.compensation.totalAnnualCompensation.annual -
                             (vm.compensation.gratuity.annual + vm.compensation.employerPf.annual +
                                 vm.compensation.annualIncentive.annual) -
                             (vm.compensation.basicSalary.annual + vm.compensation.hra.annual) -
@@ -150,18 +150,19 @@
                                     vm.compensation.annualIncentive.annual) -
                                 (vm.compensation.basicSalary.annual + vm.compensation.hra.annual) -
                                 (vm.compensation.medicalReimbursement.annual) >
-                                vm.compensation.basicSalary.annual * 7.5 / 100) ?
-                            (vm.compensation.basicSalary.annual * 7.5 / 100) : (vm.compensation.totalAnnualCompensation.annual -
+                                vm.compensation.basicSalary.annual * (this.opted ? this.opted : 0)) ?
+                            (vm.compensation.basicSalary.annual * (this.opted ? this.opted : 0)) : (vm.compensation.totalAnnualCompensation.annual -
                                 (vm.compensation.gratuity.annual + vm.compensation.employerPf.annual +
                                     vm.compensation.annualIncentive.annual) -
                                 (vm.compensation.basicSalary.annual + vm.compensation.hra.annual) -
-                                (vm.compensation.medicalReimbursement.annual))));
+                                (vm.compensation.medicalReimbursement.annual)))) : 0;
                 },
                 get projected() {
                     return (this.opted && this.annual > 0) ? this.annual : 0;
                 },
                 "canOpt": true,
-                "opted": true,
+                "opted": 0.075,
+                "options": [{ key: "100%", value: 0.075 }, { key: "60%", value: 0.045 }, { key: "0%", value: false }],
                 hide: false,
                 get messageInfo() {
                     return (vm.compensation.fuelAllowance.annual <= 0 ? "" : (this.opted ?
@@ -188,16 +189,17 @@
                 "description": "Meal Allowance",
                 "monthly": 0,
                 get annual() {
-                    return (vm.compensation.totalAnnualCompensation.annual - (vm.compensation.gratuity.annual + vm.compensation.employerPf.annual + vm.compensation.annualIncentive.annual) - (vm.compensation.basicSalary.annual + vm.compensation.hra.annual + vm.compensation.conveyanceAllowance.annual) - (vm.compensation.medicalReimbursement.annual + vm.compensation.fuelAllowance.annual + vm.compensation.lta.annual) > 2200 * 12 ? 2200 * 12 : vm.compensation.totalAnnualCompensation.annual - (vm.compensation.gratuity.annual + vm.compensation.employerPf.annual + vm.compensation.annualIncentive.annual) - (vm.compensation.basicSalary.annual + vm.compensation.hra.annual + vm.compensation.conveyanceAllowance.annual) - (vm.compensation.medicalReimbursement.annual + vm.compensation.fuelAllowance.annual + vm.compensation.lta.annual));
+                    return this.opted !== 'false' ? (vm.compensation.totalAnnualCompensation.annual - (vm.compensation.gratuity.annual + vm.compensation.employerPf.annual + vm.compensation.annualIncentive.annual) - (vm.compensation.basicSalary.annual + vm.compensation.hra.annual + vm.compensation.conveyanceAllowance.annual) - (vm.compensation.medicalReimbursement.annual + vm.compensation.fuelAllowance.annual + vm.compensation.lta.annual) > (this.opted ? this.opted : 0) * 12 ? (this.opted ? this.opted : 0) * 12 : vm.compensation.totalAnnualCompensation.annual - (vm.compensation.gratuity.annual + vm.compensation.employerPf.annual + vm.compensation.annualIncentive.annual) - (vm.compensation.basicSalary.annual + vm.compensation.hra.annual + vm.compensation.conveyanceAllowance.annual) - (vm.compensation.medicalReimbursement.annual + vm.compensation.fuelAllowance.annual + vm.compensation.lta.annual)) : 0;
                 },
                 get projected() {
                     return (this.opted && this.annual > 0) ? this.annual : 0;
                 },
                 "canOpt": true,
-                "opted": true,
+                "opted": 2200,
+                "options": [{ key: "1100", value: 1100 }, { key: "2200", value: 2200 }, { key: "0", value: false }],
                 hide: false,
                 get messageInfo() {
-                    return this.opted ? "Your cash take home pay will decrease (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * (1 - vm.compensation.expectedMarginalTaxRate.projected) / 12) + " per month) but you will get Rs." + Math.round(vm.compensation.mealAllowance.annual / 12) + " per month in a food card and you will pay less taxes (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * vm.compensation.expectedMarginalTaxRate.projected) + " per year)" : "Your cash take home pay will increase (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * (1 - vm.compensation.expectedMarginalTaxRate.projected) / 12) + " per month), but you will pay more taxes (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * vm.compensation.expectedMarginalTaxRate.projected) + " per year)";
+                    return this.opted !== 'false' ? "Your cash take home pay will decrease (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * (1 - vm.compensation.expectedMarginalTaxRate.projected) / 12) + " per month) but you will get Rs." + Math.round(vm.compensation.mealAllowance.annual / 12) + " per month in a food card and you will pay less taxes (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * vm.compensation.expectedMarginalTaxRate.projected) + " per year)" : "Your cash take home pay will increase (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * (1 - vm.compensation.expectedMarginalTaxRate.projected) / 12) + " per month), but you will pay more taxes (Est: Rs." + Math.round(vm.compensation.mealAllowance.annual * vm.compensation.expectedMarginalTaxRate.projected) + " per year)";
                 }
             },
             "telephoneReimbursement": {
